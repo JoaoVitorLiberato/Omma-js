@@ -31,47 +31,42 @@ const cadastrarReceita = (id, titulo, dificuldade, ingredientes, preparo, link, 
 
 
 
-console.log(listaDeReceitas);
-
-function exibirReceitas() {
-    
-    for (let i = 0; i < listaDeReceitas.length; i++) {
-        const receita = listaDeReceitas[i];
-        console.log('-----------------------------');
-        console.log(`Titulo: ${receita.titulo}`);
-        console.log("Ingredientes: ");
-
-        for (let j = 0; j < receita.ingredientes.length; j++) {
-            console.log(`- ${receita.ingredientes[j]}`);
-    
-        }
-    
-        console.log("vegano? ", receita.vegano);
-    }   
 
 
-}
+listaDeReceitas.forEach((receita) => {
+
+    console.log('-----------------------------');
+    console.log(`Titulo: ${receita.titulo}`);
+    console.log("Ingredientes: ");
+
+    receita.ingredientes.forEach((ingrediente) => {
+        console.log(`${ingrediente}`);
+    })
+
+})
 
 
-function deletarReceita(id) {
-    let novaListaDeReceitas = [];
+const deletarReceita = (id) => {
+    const indiceReceita = listaDeReceitas.findIndex((receita) => {
+        return receita.id === id;
+    });
 
-    for (let i = 0; i < listaDeReceitas.length; i++) {
-        const receita = listaDeReceitas[i];
-
-        if (receita.id !== id) {
-            novaListaDeReceitas.push(receita);
-        }
-
-    }
-
-    if (novaListaDeReceitas.length === listaDeReceitas.length) {
+    if (indiceReceita === -1) {
         return console.log("Receita não encontrada");
     }
 
-    listaDeReceitas = novaListaDeReceitas;
-    console.log("Receita deletada com sucesso!");
+    listaDeReceitas.splice(indiceReceita, 1);
+
 }
+
+
+const buscarReceita = (termo) => {
+    return listaDeReceitas.filter((receita) => {
+        return receita.titulo.toLowerCase().indexOf(termo) != -1;
+    });
+};
+
+
 
 
 cadastrarReceita(
@@ -83,6 +78,4 @@ cadastrarReceita(
     'https://wikipidia.org',
     false,
 );
-    
-exibirReceitas();
-deletarReceita(1)
+
