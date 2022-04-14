@@ -30,9 +30,6 @@ const cadastrarReceita = (id, titulo, dificuldade, ingredientes, preparo, link, 
 };
 
 
-
-
-
 listaDeReceitas.forEach((receita) => {
 
     console.log('-----------------------------');
@@ -65,6 +62,51 @@ const buscarReceita = (termo) => {
         return receita.titulo.toLowerCase().indexOf(termo) != -1;
     });
 };
+
+const atualizarReceita = (id, receitaAtualizada = {}) => {
+    const indice = listaDeReceitas.findIndex((receita) => receita.id === id)
+
+  /*
+    if (indiceReceita === -1) {
+        console.log('Receita não encontrada.');
+    }
+
+    if (receitaAtualizada.titulo !== null) {
+        listaDeReceitas[indiceReceita].titulo = receitaAtualizada.titulo;
+    }
+
+    if (receitaAtualizada.dificuldade !== null) {
+        listaDeReceitas[indiceReceita].dificuldade = receitaAtualizada.dificuldade;
+    }
+
+    if (receitaAtualizada.ingredientes !== null) {
+        listaDeReceitas[indiceReceita].ingredientes = receitaAtualizada.ingredientes;
+    }
+
+    if (receitaAtualizada.preparo !== null) {
+        listaDeReceitas[indiceReceita].preparo = receitaAtualizada.preparo;
+    }
+
+    if (receitaAtualizada.link !== null) {
+        listaDeReceitas[indiceReceita].link = receitaAtualizada.link;
+    }
+
+    if (receitaAtualizada.vegano !== null) {
+        listaDeReceitas[indiceReceita].vegano = receitaAtualizada.vegano;
+    }*/
+
+    // com spread
+    listaDeReceitas[indiceReceita] = {
+        ...listaDeReceitas[indiceReceita],
+        ...receitaAtualizada,
+    }
+
+
+    console.log(`Receita ${receitaAtualizada.titulo} atualizada com sucesso!`);
+}
+
+
+
 
 
 
