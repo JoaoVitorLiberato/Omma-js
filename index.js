@@ -1,18 +1,10 @@
 const nomeEmpresa = 'Sistema Omma';
 console.log(nomeEmpresa);
 
-const listaDeReceitas = [{
-
-    id: 1,
-    titulo: 'Cachorro Quente',
-    dificuldade: 'Simples',
-    ingredientes: ['1 pão de leite', '1 salsicha', '1 colher de batata palha'],
-    preparo: 'coloca no fogo e está tudo certo!',
-    link: 'http://youtube.com',
-    vegano: false,
-
-},
-];
+const fs = require("fs")
+const rawData = fs.readFileSync("data.json");
+const listaDeReceitas = JSON.parse(rawData);
+const indiceUltimaReceita = listaDeReceitas.length - 1;
 
 const cadastrarReceita = (id, titulo, dificuldade, ingredientes, preparo, link, vegano) => {
 
@@ -25,25 +17,42 @@ const cadastrarReceita = (id, titulo, dificuldade, ingredientes, preparo, link, 
         link,
         vegano,
     };
+
     listaDeReceitas.push(novaReceita);
-    console.log(`cadastro da receita ${titulo} feita com sucesso!`)
+    fs.writeFileSync("data.json", JSON.stringify(listaDeReceitas));
+    console.log(`cadastro da receita ${titulo} feita com sucesso!\n`)
 };
 
 
-listaDeReceitas.forEach((receita) => {
 
+const exibirReceitas = listaDeReceitas.forEach((receita) => {
+
+     const rawData = fs.readFileSync("data.json");
+     const listaDeReceitas = JSON.parse(rawData);
+
+    const { titulo, ingredientes, vegano } = receita
     console.log('-----------------------------');
-    console.log(`Titulo: ${receita.titulo}`);
+    console.log(`Titulo: ${titulo}`);
+    console.log('-----------------------------');
+
     console.log("Ingredientes: ");
 
-    receita.ingredientes.forEach((ingrediente) => {
+    ingredientes.forEach((ingrediente) => {
         console.log(`${ingrediente}`);
+        console.log('-----------------------------');
     })
+
+    console.log(`Vegano: ${vegano}`);
+    console.log('-----------------------------------');
 
 })
 
 
 const deletarReceita = (id) => {
+
+    const rawData = fs.readFileSync("data.json");
+     const listaDeReceitas = JSON.parse(rawData);
+
     const indiceReceita = listaDeReceitas.findIndex((receita) => {
         return receita.id === id;
     });
@@ -53,34 +62,34 @@ const deletarReceita = (id) => {
     }
 
     listaDeReceitas.splice(indiceReceita, 1);
+    fs.writeFileSync("data.json", JSON.stringify(listaDeReceitas));
 
 }
 
 
 const buscarReceita = (termo) => {
     return listaDeReceitas.filter((receita) => {
-        return receita.titulo.toLowerCase().indexOf(termo) != -1;
+        return receita.titulo.toLowerCase().indexOf(termo.toLowerCase()) != -1;
     });
 };
 
 const atualizarReceita = (id, receitaAtualizada = {}) => {
+    
+  const rawData = fs.readFileSync("data.json");
+  const listaDeReceitas = JSON.parse(rawData);
+
     const indice = listaDeReceitas.findIndex((receita) => receita.id === id)
 
     // com spread
-    listaDeReceitas[indiceReceita] = {
-        ...listaDeReceitas[indiceReceita],
+    listaDeReceitas[indice] = {
+        ...listaDeReceitas[indice],
         ...receitaAtualizada,
     }
 
 
-    console.log(`Receita ${receitaAtualizada.titulo} atualizada com sucesso!`);
+    console.log(`Receita ${receitaAtualizada.titulo} atualizada com sucesso!\n`);
+    fs.writeFileSync("data.json", JSON.stringify(listaDeReceitas));
 }
-
-
-
-
-
-
 
 cadastrarReceita(
     2,
@@ -92,3 +101,12 @@ cadastrarReceita(
     false,
 );
 
+console.log(atualizarReceita(0, {
+    id: 1,
+    titulo: 'pudim',
+    dificuldade: 'facil',
+    ingredientes: ['ovos', 'leite', 'açucar'],
+    preparo: 'coloca na geladeira apos acabar',
+    link: 'googole.com',
+    vegano: false,
+}));
