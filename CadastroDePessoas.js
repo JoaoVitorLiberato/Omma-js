@@ -7,6 +7,7 @@ const cadastroDePessoas = [{
     COMPLEMENTO: 'Nº65, CASA 9',
     BAIRRO: 'CAMPO GRANDE',
     CIDADE: 'RIO DE JANEIRO',
+    ATIVO: false,
 },
 
 {
@@ -19,12 +20,13 @@ const cadastroDePessoas = [{
     COMPLEMENTO: 'Nº 998, APT N125',
     BAIRRO: 'FLAMENGO',
     CIDADE: 'RIO DE JANEIRO',
+    ATIVO: true,
 
 }
 
 ];
 
-const cadastrarNovaPessoa = (CPF, NOME, FILIAÇÃO, CEP, ENDERECO, COMPLEMENTO, BAIRRO, CIDADE) => {
+const cadastrarNovaPessoa = (CPF, NOME, FILIAÇÃO, CEP, ENDERECO, COMPLEMENTO, BAIRRO, CIDADE, ATIVO) => {
     const novaPessoa = {
         CPF,
         NOME,
@@ -34,20 +36,33 @@ const cadastrarNovaPessoa = (CPF, NOME, FILIAÇÃO, CEP, ENDERECO, COMPLEMENTO, 
         COMPLEMENTO,
         BAIRRO,
         CIDADE,
+        ATIVO,
     }
     cadastroDePessoas.push(novaPessoa);
     console.log(`${NOME} Cadastrado com sucesso!`);
 }
 
+const todasPessoas = cadastroDePessoas.forEach((todos) => {
+    console.log(todos);
+    
+})
 
 
-const nameEndereco = cadastroDePessoas.forEach((person) => {
-    console.log('************************************************************************************');
-    console.log(`NOME: ${person.NOME} - RUA: ${person.ENDERECO} - COMPLEMENTO: ${person.COMPLEMENTO}`);
-    console.log('************************************************************************************');
 
-});
-
-
+const nameEndereco = cadastroDePessoas.map((pessoa) => (
+    {
+        Nome: pessoa.NOME,
+        Endereco: pessoa.ENDERECO,
+        Complemento: pessoa.COMPLEMENTO,
+    }
+)
+);
 
 console.log(nameEndereco);
+
+
+const pessoasAtivas = cadastroDePessoas.filter((pessoa) => {
+    return pessoa.ATIVO === true;
+})
+
+console.log(pessoasAtivas);

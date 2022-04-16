@@ -215,50 +215,90 @@ const persons = [
     },
 ];
 
+// Jeito Basico de pecorrer elementos do array
 
-//maneira de fazer com for 
-/*
+// for(let i = 0; i < persons.length; i++){
+//     const pessoa = persons[i];
+//     //console.log(pessoa.name);
+//     //ou
+//     console.log(`Nome: ${pessoa.name}, idade: ${pessoa.age}`)
+// }
 
-for(let i = 0; i < persons.length; i++){
-    //const pessoa = persons[i]; maneira 1
-    //console.log(pessoa.name) fim da maneira 1
-   // console.log(persons[i].name); maneira 2
-}*/
-
-// loop de repetição. forEach. utilizado para pecorrer os registro do array
-/*persons.forEach((pessoa, index) => {
-    console.log(`${index} - ${pessoa.name}`);
+const listNames = persons.forEach((pessoa) => {
+    console.log(`nome: ${pessoa.name}, idade: ${pessoa.age}`);
 });
-*/
 
-/*
-//retorna uma  nova lista
-const newPerson = persons.map((pessoa) => {
-    return{
+
+// Metodo retornando o objeto
+
+// const newPersons = persons.map((pessoa) => {
+//     return {
+//         Name: pessoa.name,
+//         Age: pessoa.age,
+//         Gender: pessoa.gender
+
+//     }
+// });
+// console.log(newPersons);
+
+
+// Metodo encapsulando os objetos.
+const newPersons = persons.map((pessoa) => (
+    {
         name: pessoa.name,
         age: pessoa.age,
         gender: pessoa.gender,
-    };
-});
+    }
+)
+);
 
-console.log(newPerson);
-*/
+// console.log(newPersons);
 
-/*
-const personsActiver = persons.filter((pessoa) => {
+// const seachName = persons.filter((people) => {
+//     if(people.gender == 'male' ){
+//         console.log(people);
+//     }
+// }
+// )
+// console.log(seachName);
 
-    return pessoa.isActive;
-});
 
-console.log(personsActiver);
-*/
 
-/*
-const moraEmArizona = persons.filter((pessoa) => {
-
-    return pessoa.address.toLowerCase().indexOf("Arizona") != -1;
+const peopleQueMoramNoArizona = persons.filter((seach) => {
+    return seach.address.toLowerCase().indexOf('arizona') != -1;
 })
 
-console.log(moraEmArizona);
-*/
+// console.log(peopleQueMoramNoArizona);
+const tagsPeople = persons.filter((people) => {
+    if (people.tags.indexOf('do') !== -1) {
+        console.log(people)
+    }
+}
+);
+console.log(tagsPeople);
+
+const acharPessoasPelaIdade = persons.filter((people) => {
+    if (people.age === 34) {
+        console.log(`${people.name} - ${people.age}`);
+    }
+
+});
+
+console.log(acharPessoasPelaIdade);
+
+const deletePeoples = (id) => {
+
+    const deletePeople = persons.findIndex((people) => {
+        return people._id === id;
+    });
+
+    if(deletePeople === -1){
+        return console.log('Pessoa não encontrada!');
+    }
+
+    persons.sprice(deletePeople, 1);
+
+}
+console.log(persons.length);
+
 
